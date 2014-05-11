@@ -1,10 +1,10 @@
 % Hausaufgabe 07
 % Anne Kathrin Knetsch <knetscha@students.uni-marburg.de>
-% 2014-05-08
+% 2014-05-11
 
 Falls die Umlaute in dieser und anderen Dateien nicht korrekt dargestellt werden, sollten Sie File > Reopen with Encoding > UTF-8 sofort machen (und auf jeden Fall ohne davor zu speichern), damit die Enkodierung korrekt erkannt wird! 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE
 # citations with R -- kinda like BibTeX!
 suppressPackageStartupMessages(library(knitcitations))
 ```
@@ -82,22 +82,26 @@ for(s in c(3,4,5) ){
 }
 ```
 
+
 Aber wir hoffen alle, dass wir doch eine gute Note bekommen. Fügen Sie einen Code-Block hier ein, der das gleiche aber mit "ausgezeichneten" Noten (=1 bzw. >= 13) macht. (Bei evtl. Copy-Paste nicht vergessen, "fallen...durch" durch etwas Passendes zu ersetzen!)  
 
 code_block_hier
-´´´{r}
-for(s in c(3,4,5)){
-sehr gut <- pnorm (13,mean=mu,sd=3,lower.tail=FALSE)
-output2 <- paste("Be einer Standardabweichung von",s,"bekommen",sehr gut*100,"% eine eins."")
+```{r}
+for(s in c(3,4,5) ){
+  sehrgut <- pnorm(13,mean=mu,sd=s,lower.tail=FALSE)
+  output2 <- paste("Bei einer Standardabweichung von",s,"bekommen",sehrgut*100,"% eine eins.")
+  print(output2)
 }
-´´´
+```
 Wie steht die Anzahl guter Noten in Beziehung zur Anzahl schlechter Noten? 
 
 antwort_hier
+Die Anzahl der schlechten Noten ist größer als die Anzahl der guten Noten. Der prozentuale Anzhal beider Fälle steigt mit zunehmender Standardabweichung
 
 Warum?
 
 antwort_hier
+Bei den schlechten Noten werden 5 verschiedene Ereignisse (?? Noten: 0,1,2,3,4) betrachtet, bei den guten Noten nur 3 (15,14,13).
 
 ## Kurtosis und Schiefe
 Kurtosis (im Deutschen auch *Wölbung*) ist ein Maß dafür, wie spitz eine Verteilung ist. Die Normalverteilung wird nie zu extrem spitz -- der Gipfel bleibt immer schön rund, obwohl er manchmal eng wird. Andere Verteilungen (z.B. die Laplace-Verteilung ) haben Gipfel, die nicht rund sind.   
