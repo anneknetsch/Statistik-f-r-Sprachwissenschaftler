@@ -132,10 +132,8 @@ Jetzt können wir die absoluten Häufigkeiten auch plotten:
 
 code_block_hier
 ```{r}
-n <- 50
-noten.dist$Anzahl <- noten.dist$P * n
 library(ggplot2)
-ggplot(data=noten.dist,aes(x=Notenpunkte,y=P,color=Standardabweichung)) + geom_line() + scale_x_continuous(limits=c(0,16))
+ggplot(data=noten.dist,aes(x=Notenpunkte,y=Anzahl,color=Standardabweichung)) + geom_line() + scale_x_continuous(limits=c(0,16)) 
 ```
 
 Beantworten Sie ein paar Fragen über die Verteilung, indem Sie den passenden R-Code einsetzen:
@@ -192,6 +190,7 @@ print(n7.z)
 ```
 
 Das ist ein **insignifikanter** Unterschied. 
+(zweiseitiger Test, da Unterschied unklar)
 
 In einer Vorlesung vom selben Dozenten mit 50 Teilnehmern beträgt der Durchschnittswert wieder 10. (Es scheint, dass der Dozent 10 besonders toll findet.) Berechnen Sie den $z$-Test:
 
@@ -205,7 +204,8 @@ n50.z <- sqrt(n)*((m-mu)/sd)
 print(n50.z)
 ```
 
-Das ist ein **signifikanter** Unterschied. 
+Das ist ein **signifikanter** Unterschied.
+(s.o.)
 
 Ist die Benotung vom Dozenten weniger als ideal? 
 
@@ -215,6 +215,7 @@ Die Verwaltung ist auch auf einen anderen Dozenten aufmerksam geworden, weil man
 In einem mittelgroßen Seminar mit 20 Studenten beträgt der Durchschnittswert 7. Der Dozent sagt, dass das wunderbar nah am Erwartungswert (8) ist, und dass man ihn in Ruhe lassen sollte. Ist er zu streng?
 
 Berechnen Sie den $z$-Test:
+
 
 code_hier
 ```{r} 
@@ -227,6 +228,7 @@ print(n20.z)
 ```
 
 Das ist ein **insignifikanter** Unterschied. 
+(einseitiger Test, da behauptet wird, er bewertet zu streng )
 
 Später ergibt sich, dass es eigentlich 25 Studenten im Kurs gab. (Der Dozent hat "einen Tippfehler" gemacht, als er seine Teilnehmerzahl per Mail an die Verwaltung geschickt hat.) Der Durchschnittswert bleibt -- behauptet der Dozent -- immer noch bei 7. Er behauptet weiterhin, dass das wunderbar nah am Erwartungswert (8) ist, und dass man ihn in Ruhe lassen sollte. Ist er zu streng?
 
@@ -242,7 +244,8 @@ n20.z <- sqrt(n)*((m-mu)/sd)
 print(n20.z)
 ```
 
-Das ist ein **siginifikanter** Unterschied. 
+Das ist ein **siginifikanter** Unterschied.
+(s.o.)
 
 ## Zum Überlegen
 Gibt es einen Grund, weshalb die Noten normal verteilt sein sollten? Warum ist das die übliche Annahme?
