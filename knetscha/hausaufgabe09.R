@@ -76,9 +76,7 @@ print(var.test(rt$RT[1:10],rt$RT[11:20]))
 # Das Ergbenis ist nicht 1, was bedeutet, dass die Varianzen nicht homogen sind.
 
 # Berechenen Sie den Levene Test:#
-print(leveneTest(rt$subj=="1"~rt$subj=="2"))
-print(leveneTest(rt$subj,rt$RT))
-print(leveneTest(rt$RT[1:10]~rt$RT[11:20]))
+print(leveneTest(rt$RT~rt$subj))
 
 # Sind die Varianzen homogen? Vergessen Sie nicht, dass die Nullhypothese beim
 # Levene Test "Varianzen Gleich" ist.
