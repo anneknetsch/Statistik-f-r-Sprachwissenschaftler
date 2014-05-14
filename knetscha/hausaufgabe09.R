@@ -50,14 +50,14 @@ rt <- read.table("punkt_rt.tab",header=TRUE)
 # (http://osdoc.cogsci.nl/) auch zu Hause ausführen!)
 
 # Wir schauen uns erst mal eine Zusammenfassung der Daten an:
-# print(summary(rt))
+print(summary(rt))
 
 # Wir sehen sofort, dass R die Variabel "subj" als numerische Variable
 # behandelt hat, obwohl sie eigentlich kategorisch ist. Das müssen wir ändern:
-# rt$subj <- as.factor(rt$subj)
+rt$subj <- as.factor(rt$subj)
 # 
-# rt.plot <- qplot(x=RT,color=subj,fill=subj,data=rt, geom="density",alpha=I(0.3))
-# print(rt.plot)
+rt.plot <- qplot(x=RT,color=subj,fill=subj,data=rt, geom="density",alpha=I(0.3))
+print(rt.plot)
 
 # Haben die Daten der beiden Gruppen -- die wiederholten Messwerte der einzelnen
 # Probanden bilden ja Gruppen -- homogene Varianz? Bevor Sie irgendwelche Tests 
@@ -69,13 +69,16 @@ rt <- read.table("punkt_rt.tab",header=TRUE)
 # Sie von vorneherein etwas behaupten haben.
 
 # Berechnen Sie jetzt den F-Test:
-#print(CODE_HIER)
+print(var.test(rt$RT[1:10],rt$RT[11:20]))
 
 # Sind die Varianzen homogen? Vergessen Sie nicht, dass die Nullhypothese beim
 # F-Test "Varianzen Ungleich" ist.
+# Das Ergbenis ist nicht 1, was bedeutet, dass die Varianzen nicht homogen sind.
 
-# Berechenen Sie den Levene Test:
-#print(CODE_HIER)
+# Berechenen Sie den Levene Test:#
+print(leveneTest(rt$subj=="1"~rt$subj=="2"))
+print(leveneTest(rt$subj,rt$RT))
+print(leveneTest(rt$RT[1:10]~rt$RT[11:20]))
 
 # Sind die Varianzen homogen? Vergessen Sie nicht, dass die Nullhypothese beim
 # Levene Test "Varianzen Gleich" ist.
