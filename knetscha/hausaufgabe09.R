@@ -135,27 +135,60 @@ if (shapiro2$p.value > 0.05){print("Shapiro's test insignifikant, die Daten sind
 # Wir haben auch Transformationen bei schiefen Datenverteilungen angesprochen.
 # Die logaritmische Verteilung ist ziemlich beliebt bei Reaktionszeitsdaten.
 
-# rt$logRT <- log(rt$RT)
-# print(summary(rt$logRT))
-# logrt.plot <- CODE_HIER
-# print(logrt.plot)
+rt$logRT <- log(rt$RT)
+print(summary(rt$logRT))
+print(rt$logRT)
+logrt.plot <- qplot(x=logRT,color=subj,fill=subj,data=rt, geom="density",alpha=I(0.3))
+print(logrt.plot)
 
 # Sieht die Verteilung besser aus? Sind die Varianzen "homogener" geworden? 
 # Berechnen Sie den F-Test und den Levene-Test für die logaritmisch skalierten 
 # Daten. Nach jedem Test sollten Sie auch programmatisch (=durch if-Blöcke)
 # ausdrücken, ob die Varianzen homogen sind.
 
-# CODE_HIER
+# F-Test
+print(var.test(rt$logRT[1:10],rt$logRT[11:20]))
+
+# Levene Test
+leveneTest(rt$logRT~rt$subj)
 
 # Sind die Daten "normaler" gewordern? Berechnen Sie den Shapiro-Test für beide 
 # Gruppen. Nach jeder Gruppe sollten Sie auch programmatisch (=durch if-Blöcke)
 # ausdrücken, ob die Daten normal verteilt sind. 
 # (Für die fortgeschrittenen: hier könnte man auch eine for-Schleife nutzen...)
 
-# CODE_HIER
+# Shapiro Test Subject 1
+shapirolog1 <- shapiro.test(rt$logRT[1:10])
+print(shapirolog1)
+
+if (shapirolog1$p.value > 0.05){print("Shapiro's test insignifikant, die Daten sind normal verteilt.")}else{print("Shapiro's test signifikant, die Daten sind nicht normal verteilt.")}
+
+#shapiro Test Subject 2
+shapirolog2 <- shapiro.test(rt$logRT[11:20])
+print(shapirolog2)
+
+if (shapirolog2$p.value > 0.05){print("Shapiro's test insignifikant, die Daten sind normal verteilt.")}else{print("Shapiro's test signifikant, die Daten sind nicht normal verteilt.")}
+
+# Die Daten sind eher nicht normaler geworden. Voher wurde nur subject 1 als normal verteilt beschrieben,
+# jetzt werden beide Versuchspersonen als nicht normal verteilt beschrieben.Der p-Wert der 
+# zweiten Versuchsperson hat sich kaum verändert.
 
 # Hat die logarithmische Transformation insgesamt geholfen? Berechnen Sie zum
 # Schluss den (Welch) t-Test für die logarithmischen Daten. Bekommen Sie das
 # gleiche Ergebnisse wie bei den Ausgangsdaten?
 
-# CODE_HIER
+two.sample.log <- t.test(rt$logRT[1:10],rt$logRT[11:20],var.equal=TRUE)
+
+welchlog <- t.test(rt$logRT[1:10],rt$logRT[11:20])
+
+print(two.sample.log)
+print(welchlog)
+
+t.diff <- welchlog$statistic - two.sample.log$statistic
+print(paste("Die Differenz zwischen den beiden t-Werten ist",t.diff,"."))
+
+# Der P-Wert ist etwas größer, das heißt Ergebnis ist etwas weniger signifikant. Man kommt 
+# jedoch wiederum (durch Vergleich two sample t test/ welch two sample t test) 
+# auf das Ergebnis, dass die Varianzen homogen sind (Differenz=0).
+
+
