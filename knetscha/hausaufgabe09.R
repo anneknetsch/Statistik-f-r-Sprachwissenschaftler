@@ -70,10 +70,13 @@ print(rt.plot)
 
 # Berechnen Sie jetzt den F-Test:
 print(var.test(rt$RT[1:10],rt$RT[11:20]))
+# ODER
+print(var.test(rt$RT~rt$subj))
 
 # Sind die Varianzen homogen? Vergessen Sie nicht, dass die Nullhypothese beim
 # F-Test "Varianzen Ungleich" ist.
-# Das Ergbenis ist nicht 1, was bedeutet, dass die Varianzen nicht homogen sind.
+
+# Da Nullhypothese abgelehnt werden muss sind Varianzen homogen.
 
 # Berechenen Sie den Levene Test:#
 print(leveneTest(rt$RT~rt$subj))
@@ -81,40 +84,53 @@ print(leveneTest(rt$RT~rt$subj))
 # Sind die Varianzen homogen? Vergessen Sie nicht, dass die Nullhypothese beim
 # Levene Test "Varianzen Gleich" ist.
 
+# Nullhypothese wird beibehalten; Varianzen sind homogen.
+
 # Für heterogene Varianzen haben wir eine Variante des  t-Tests gesehen, die
 # eine Korrektur der Freiheitsgerade macht. Bei homogener Varianz sollten beide
 # Variante ähnliche bzw. (fast) gleiche Ergebnisse liefern. Ist das hier der
 # Fall?
-# two.sample <- CODE_HIER
-# welch <- CODE_HIER
 
-# print(two.sample)
-# print(welch)
+two.sample <- t.test(rt$RT[1:10],rt$RT[11:20],var.equal=TRUE)
+
+welch <- t.test(rt$RT[1:10],rt$RT[11:20])
+
+print(two.sample)
+print(welch)
+
+# Sieht ziemlich ähnlich aus!
 
 # Das Ergebnis der verschiedenen Test-Funktionen in R ist übrigens eine Liste.
 # Wir können das ausnutzen, um zu schauen, ob es einen Unterschied zwischen den
 # beiden Testverfahren gab. Wenn die Varianz homogen war, sollten wir keinen
 # Unterschied sehen:
-# t.diff <- welch$statistic - two.sample$statistic
-# print(paste("Die Differenz zwischen den beiden t-Werten ist",t.diff,"."))
+t.diff <- welch$statistic - two.sample$statistic
+print(paste("Die Differenz zwischen den beiden t-Werten ist",t.diff,"."))
+
+# Differenz zwischen beiden t-Werten ist 0, also ist die Varianz homogen.
 
 # Sind die Daten normal verteilt? Wir berechnen Sie den Shapiro Test für erste Versuchsperson:
-# shapiro <- shapiro.test(rt[rt$subj==1,"RT"])
+shapiro <- shapiro.test(rt[rt$subj==1,"RT"])
 # 
-# print(shapiro)
+print(shapiro)
 
 # Wir können auch "Entscheidungen" im Code treffen. Die Syntax dafür ist wie
 # folgt -- die runden und geschweiften Klammern sind alle sehr wichtig!
-# if (shapiro$p.value > 0.05){
-#   print("Shapiro's test insignikant, die Daten sind normal verteilt.")
-# }else{
-#   print("Shapiro's test signikant, die Daten sind nicht normal verteilt.")
-# }
+if (shapiro$p.value > 0.05){print("Shapiro's test insignifikant, die Daten sind normal verteilt.")}else{print("Shapiro's test signifikant, die Daten sind nicht normal verteilt.")}
+
 
 # Berechnen Sie Shapiro's Test für die andere Versuchsperson und drücken Sie mit
 # einem if-Block aus, ob die Daten normal verteilt sind.
 
-# CODE_HIER
+shapiro2 <- shapiro.test(rt[rt$subj==2,"RT"])
+print(shapiro2)
+#ODER
+shapiro2 <- shapiro.test(rt$RT[11:20])
+print(shapiro2)
+
+#if-Block
+if (shapiro2$p.value > 0.05){print("Shapiro's test insignifikant, die Daten sind normal verteilt.")}else{print("Shapiro's test signifikant, die Daten sind nicht normal verteilt.")}
+
 
 # Wir haben auch Transformationen bei schiefen Datenverteilungen angesprochen.
 # Die logaritmische Verteilung ist ziemlich beliebt bei Reaktionszeitsdaten.
