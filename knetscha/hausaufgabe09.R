@@ -74,9 +74,9 @@ print(var.test(rt$RT[1:10],rt$RT[11:20]))
 print(var.test(rt$RT~rt$subj))
 
 # Sind die Varianzen homogen? Vergessen Sie nicht, dass die Nullhypothese beim
-# F-Test "Varianzen Ungleich" ist.
+# F-Test "Varianzen Gleich" ist.
 
-# Da Nullhypothese abgelehnt werden muss sind Varianzen homogen.
+# Da Nullhypothese abgelehnt werden muss sind Varianzen nicht homogen.
 
 # Berechenen Sie den Levene Test:#
 print(leveneTest(rt$RT~rt$subj))
@@ -177,18 +177,13 @@ if (shapirolog2$p.value > 0.05){print("Shapiro's test insignifikant, die Daten s
 # Schluss den (Welch) t-Test für die logarithmischen Daten. Bekommen Sie das
 # gleiche Ergebnisse wie bei den Ausgangsdaten?
 
-two.sample.log <- t.test(rt$logRT[1:10],rt$logRT[11:20],var.equal=TRUE)
 
 welchlog <- t.test(rt$logRT[1:10],rt$logRT[11:20])
 
-print(two.sample.log)
 print(welchlog)
 
-t.diff <- welchlog$statistic - two.sample.log$statistic
-print(paste("Die Differenz zwischen den beiden t-Werten ist",t.diff,"."))
 
-# Der P-Wert ist etwas größer, das heißt Ergebnis ist etwas weniger signifikant. Man kommt 
-# jedoch wiederum (durch Vergleich two sample t test/ welch two sample t test) 
-# auf das Ergebnis, dass die Varianzen homogen sind (Differenz=0).
+# Der P-Wert ist etwas kleiner als bei den Ausgangsdaten, die Nullhypothese 
+# muss also immer noch abgelehnt werden.  
 
 
