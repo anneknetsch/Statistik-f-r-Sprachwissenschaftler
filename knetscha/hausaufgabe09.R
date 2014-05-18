@@ -184,6 +184,7 @@ print(welchlog)
 
 
 # Der P-Wert ist etwas kleiner als bei den Ausgangsdaten, die Nullhypothese 
-# muss also immer noch abgelehnt werden.  
+# muss also immer noch abgelehnt werden. Damit ist das Ergebnis immer noch, dass die
+# Varianzen nicht homogen sind.
 
 
