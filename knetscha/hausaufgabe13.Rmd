@@ -121,7 +121,7 @@ ggplot(data=priming.by.item) + geom_boxplot(aes(x=cond,y=RT,color=cond,fill=cond
 ```
 
 Sehen die Daten by Subject und by Item gleich aus? Wie sehen sie im Vergleich zu den Single-Trial-Daten aus?
-Die Daten für die Mittelwerte aller Trials innerhalb eines Items zeigen weniger Varianz als die Mittelwerte aller Trials innerhalb einer Person. D.h. die Items über verschiedene Personen hinweg sind stabiler als die Personen über verschiedene Items hinweg. Bei den Single-Trial-Daten gibt es viel mehr Ausreißer und es ist fast keinen Unterschied zwischen den einzelnen Bedingungen (DD, DE, ED, EE) zu erkennen.
+Die Daten für die Mittelwerte aller Trials innerhalb eines Items zeigen weniger Varianz als die Mittelwerte aller Trials innerhalb einer Person. D.h. die Items über verschiedene Personen hinweg sind stabiler als die Personen über verschiedene Items hinweg. Bei den Single-Trial-Daten gibt es viel mehr Ausreißer und es ist fast kein Unterschied zwischen den einzelnen Bedingungen (DD, DE, ED, EE) zu erkennen.
 
 # Subject- und Item-Analysen
 
