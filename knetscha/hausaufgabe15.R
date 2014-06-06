@@ -62,6 +62,10 @@ ggplot(women.metric,aes(x=height.cm,y=weight.kg)) +  geom_point() + geom_smooth(
 m2 <- lm(weight.kg ~ height.cm, data=women.metric)
 print(summary(m2))
 
+# Die Werte sind hier irgendwie komisch. Das Gewicht auf der y-Achse geht bei
+# ca. 20 kg los und die Größe bei ca. 400 cm -> ein 420 cm großer Mensch soll
+# demnach 27,5 kg wiegen??
+
 # Sehen die Plots anders aus? Hat sich der R^2 Wert geändert? Die t-Werte? Die Koeffizienten? 
 # Plots sehen fast gleich aus, R^2 Wert ist gleich, t-Werte auch. Standardfehler ist kleiner geworden.
 
@@ -87,4 +91,6 @@ print(summary(m4))
 
 # Warum funktioniert die Regression besser beim Datensatz "women" als bei den
 # Kursteilnehmerdaten? HINT: Lesen Sie die Hilfe-Beschreibung von women! 
-# Bei den Us Daten handelt es sich um Mittelwerte.
+# Bei den Us Daten handelt es sich um Mittelwerte. Von dem her sollte die 
+# Regression besser funktionieren. Allerdings ist eigentlich R^2 beim Datensatz
+# "body größer"??
