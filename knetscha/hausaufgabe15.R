@@ -91,6 +91,6 @@ print(summary(m4))
 
 # Warum funktioniert die Regression besser beim Datensatz "women" als bei den
 # Kursteilnehmerdaten? HINT: Lesen Sie die Hilfe-Beschreibung von women! 
-# Bei den Us Daten handelt es sich um Mittelwerte. Von dem her sollte die 
+# Bei den US Daten handelt es sich um Mittelwerte. Von dem her sollte die 
 # Regression besser funktionieren. Allerdings ist eigentlich R^2 beim Datensatz
-# "body größer"??
+# "body" größer?
