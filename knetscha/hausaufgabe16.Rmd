@@ -47,9 +47,24 @@ Mögliche Ausgangsfragen sind unter anderem:
 
 *Vergessen Sie dabei nicht, dass wir bisher nur Methoden gelernt haben, wo die abhängige Variable zumindest intervallskaliert ist!*
 
-Sie können sich auch [das *ggplot* Buch](http://dx.doi.org/10.1007/978-0-387-98141-3) zur Inspiration anschauen, v.a. Abbildungen 4.7, 4.8, 4.9, 5.2, 5.3, 5.4, 5.6, 5.14, 7.16, 9.1  und Kapitel 2.2-2.5 könnten inspirierend wirken. Den Code zur Erstellung der Figuren findet man immer im Haupttext.
+Sie können sich auch [das *ggplot* Buch] zur Inspiration anschauen, v.a. Abbildungen 4.7, 4.8, 4.9, 5.2, 5.3, 5.4, 5.6, 5.14, 7.16, 9.1  und Kapitel 2.2-2.5 könnten inspirierend wirken. Den Code zur Erstellung der Figuren findet man immer im Haupttext.
 
 **Originale Fragestellungen und Auswertungen werden mit Bonuspunkten belohnt!** 
+Wovon hängt der Preis eines Diamanten ab?
+
+```{r}
+ggplot(data=diamonds)+geom_density(aes(x=price,color=color,fill=color),alpha=0.3)
+ggplot(data=diamonds)+geom_violin(aes(x=color,y=price,color=color,fill=color),alpha=0.5)
+ggplot(data=diamonds)+geom_jitter(aes(x=color,y=price,color=color,fill=color),alpha=0.5)
+ggplot(data=diamonds) + geom_boxplot(aes(x=color,y=price,color=color,fill=color),alpha=0.5)
+```
+
+```{r}
+ggplot(data=diamonds)+geom_density(aes(x=price,color=cut,fill=cut),alpha=0.3)
+```
+
+ANOVA
+
 
 Hier ein paar Grafiken (auch im Buch zu finden):
 ```{r}
