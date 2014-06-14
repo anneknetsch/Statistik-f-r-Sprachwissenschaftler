@@ -110,6 +110,20 @@ Wiederum wird das gleiche Siginifikanzlevel angezeigt wie bei color und cut.
 Mehrfaktorielle ANOVA
 Man könnte nun jeden einzelnen Faktor noch mit jedem anderen vergleichen. Um das ganze etwas einfacher zu machen, kann man aber auch eine mehrfaktorielle ANOVA berechnen.
 
+```{r}
+summary(aov(price~color*cut*clarity,data=diamonds))
+```
+Haupteffekte (siehe auch oben), sowie Interaktionen sind alle signifikant. 
+
+Lineare Regression (price~table)
+
+```{r}
+ggplot(diamonds,aes(x=price,y=table)) +  geom_point() + geom_smooth(method="lm")
+diamonds.lm3 <- lm(price ~ table, data=diamonds)
+summary(diamonds.lm3)
+```
+Die Breite des Diamanten an seiner Oberseite (table) kann nur 1,6% der Varianz des Preises erklären. Die Gerade ist nahezu waagrecht. D.h. der Mittelwert der Breite der Diamanten ist für jede Preisstufe in etwa gleich. 
+
 
 Hier ein paar Grafiken (auch im Buch zu finden):
 ```{r}
