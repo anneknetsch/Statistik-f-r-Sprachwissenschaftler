@@ -50,7 +50,7 @@ Mögliche Ausgangsfragen sind unter anderem:
 Sie können sich auch [das *ggplot* Buch] zur Inspiration anschauen, v.a. Abbildungen 4.7, 4.8, 4.9, 5.2, 5.3, 5.4, 5.6, 5.14, 7.16, 9.1  und Kapitel 2.2-2.5 könnten inspirierend wirken. Den Code zur Erstellung der Figuren findet man immer im Haupttext.
 
 **Originale Fragestellungen und Auswertungen werden mit Bonuspunkten belohnt!** 
-Wovon hängt der Preis eines Diamanten ab?
+Frage: Wovon hängt der Preis eines Diamanten ab?
 
 ```{r}
 ggplot(data=diamonds)+geom_density(aes(x=price,color=color,fill=color),alpha=0.3)
@@ -122,8 +122,18 @@ ggplot(diamonds,aes(x=price,y=table)) +  geom_point() + geom_smooth(method="lm")
 diamonds.lm3 <- lm(price ~ table, data=diamonds)
 summary(diamonds.lm3)
 ```
-Die Breite des Diamanten an seiner Oberseite (table) kann nur 1,6% der Varianz des Preises erklären. Die Gerade ist nahezu waagrecht. D.h. der Mittelwert der Breite der Diamanten ist für jede Preisstufe in etwa gleich. 
+Die Breite des Diamanten an seiner Oberseite (table) kann nur 1,6% der Varianz des Preises erklären. Die Gerade ist nahezu waagrecht. D.h. der Mittelwert der Breite der Diamanten ist für jede Preisstufe in etwa gleich und steigt nicht mit dem Preis an, wie man meinen Könnte.
 
+
+Der Preis eines Diamanten hängt demnach hauptsächlich von der Karatzahl ab. Color, Cut, Clarity und table scheinen eine weniger große Rolle zu spielen.Die Residuals sind bei d Dennoch waren auch für sie die Ergebnisse signifikant.
+
+Man könnte nun noch testen, wie Color, Cut, Clarity und Table mit Carat zusammenhängen.
+
+Mehrfaktorielle ANOVA (carat~color,cut,clarity,table)
+
+```{r}
+summary(aov(carat~color*cut*clarity*table,data=diamonds))
+```
 
 Hier ein paar Grafiken (auch im Buch zu finden):
 ```{r}
