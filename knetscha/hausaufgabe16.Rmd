@@ -61,9 +61,54 @@ ggplot(data=diamonds) + geom_boxplot(aes(x=color,y=price,color=color,fill=color)
 
 ```{r}
 ggplot(data=diamonds)+geom_density(aes(x=price,color=cut,fill=cut),alpha=0.3)
+ggplot(data=diamonds)+geom_violin(aes(x=cut,y=price,color=cut,fill=cut),alpha=0.5)
 ```
 
-ANOVA
+Lineare Regression (price~carat)
+
+```{r}
+ggplot(diamonds,aes(x=price,y=carat)) +  geom_point() + geom_smooth(method="lm")
+diamonds.lm <- lm(price ~ carat, data=diamonds)
+summary(diamonds.lm)
+```
+Laut dieser Berechnung erklärt carat 84,93% der Varianz beim Preis.
+
+ANOVA (für Auswirkungen Carat auf Preis)
+
+```{r}
+summary(aov(price~carat,data=diamonds))
+```
+Karat hat eine signifikante Auswirkung auf den Preis. 
+
+Lineare Regression (price~color)
+
+```{r}
+ggplot(diamonds,aes(x=price,y=color)) +  geom_point() + geom_smooth(method="lm")
+diamonds.lm2 <- lm(price ~ color, data=diamonds)
+summary(diamonds.lm2)
+```
+-> Recherche ergab: Lineare Regression erfordert mindestens intervallskslierte Daten. Lineare Regression funktioniert nicht, da es sich bei Farbe um nominalskalierte Daten handelt. Sollte demnach bei Cut und Clarity auch nicht funktionieren, da es sich in diesen Fällen um Ordinalskalen handelt.
+
+ANOVA (Price~color)
+```{r}
+summary(aov(price~color,data=diamonds))
+```
+Zusammenhang ist signifikant. Allerdings kann man mit der ANOVA nicht sagen, wieviel der Varianz im Preis durch Color erklärt.
+
+ANOVA (Price~Cut)
+```{r}
+summary(aov(price~cut,data=diamonds))
+```
+Cut scheint in genauso signifikant für den Preis zu sein wie Color.
+
+ANOVA (Price~clarity)
+```{r}
+summary(aov(price~clarity,data=diamonds))
+``` 
+Wiederum wird das gleiche Siginifikanzlevel angezeigt wie bei color und cut.
+
+Mehrfaktorielle ANOVA
+Man könnte nun jeden einzelnen Faktor noch mit jedem anderen vergleichen. Um das ganze etwas einfacher zu machen, kann man aber auch eine mehrfaktorielle ANOVA berechnen.
 
 
 Hier ein paar Grafiken (auch im Buch zu finden):
