@@ -49,7 +49,8 @@ Mögliche Ausgangsfragen sind unter anderem:
 
 Sie können sich auch [das *ggplot* Buch] zur Inspiration anschauen, v.a. Abbildungen 4.7, 4.8, 4.9, 5.2, 5.3, 5.4, 5.6, 5.14, 7.16, 9.1  und Kapitel 2.2-2.5 könnten inspirierend wirken. Den Code zur Erstellung der Figuren findet man immer im Haupttext.
 
-**Originale Fragestellungen und Auswertungen werden mit Bonuspunkten belohnt!** 
+**Originale Fragestellungen und Auswertungen werden mit Bonuspunkten belohnt!**
+
 Frage: Wovon hängt der Preis eines Diamanten ab?
 
 ```{r}
@@ -62,6 +63,27 @@ ggplot(data=diamonds) + geom_boxplot(aes(x=color,y=price,color=color,fill=color)
 ```{r}
 ggplot(data=diamonds)+geom_density(aes(x=price,color=cut,fill=cut),alpha=0.3)
 ggplot(data=diamonds)+geom_violin(aes(x=cut,y=price,color=cut,fill=cut),alpha=0.5)
+ggplot(data=diamonds)+geom_jitter(aes(x=cut,y=price,color=cut,fill=cut),alpha=0.5)
+```
+
+```{r}
+ggplot(data=diamonds)+geom_jitter(aes(x=clarity,y=price,color=clarity,fill=clarity),alpha=0.5)
+```
+
+```{r}
+ggplot(data=diamonds)+geom_jitter(aes(x=table,y=price,color=table,fill=table),alpha=0.5)
+```
+
+```{r}
+ggplot(data=diamonds)+geom_jitter(aes(x=x,y=price,color=x,fill=x),alpha=0.5)
+```
+
+```{r}
+ggplot(data=diamonds)+geom_jitter(aes(x=y,y=price,color=y,fill=y),alpha=0.5)
+```
+
+```{r}
+ggplot(data=diamonds)+geom_jitter(aes(x=z,y=price,color=z,fill=z),alpha=0.5)
 ```
 
 Lineare Regression (price~carat)
@@ -83,11 +105,12 @@ Karat hat eine signifikante Auswirkung auf den Preis.
 Lineare Regression (price~color)
 
 ```{r}
+as.numeric(diamonds$color)
 ggplot(diamonds,aes(x=price,y=color)) +  geom_point() + geom_smooth(method="lm")
 diamonds.lm2 <- lm(price ~ color, data=diamonds)
 summary(diamonds.lm2)
 ```
--> Recherche ergab: Lineare Regression erfordert mindestens intervallskslierte Daten. Lineare Regression funktioniert nicht, da es sich bei Farbe um nominalskalierte Daten handelt. Sollte demnach bei Cut und Clarity auch nicht funktionieren, da es sich in diesen Fällen um Ordinalskalen handelt.
+-> Lineare Regression erfordert mindestens intervallskalierte Daten. Lineare Regression funktioniert nicht, da es sich bei Farbe um nominalskalierte Daten handelt. Sollte demnach bei Cut und Clarity auch nicht funktionieren, da es sich in diesen Fällen um Ordinalskalen handelt.
 
 ANOVA (Price~color)
 ```{r}
@@ -99,7 +122,7 @@ ANOVA (Price~Cut)
 ```{r}
 summary(aov(price~cut,data=diamonds))
 ```
-Cut scheint in genauso signifikant für den Preis zu sein wie Color.
+Cut scheint genauso signifikant für den Preis zu sein wie Color.
 
 ANOVA (Price~clarity)
 ```{r}
@@ -107,15 +130,8 @@ summary(aov(price~clarity,data=diamonds))
 ``` 
 Wiederum wird das gleiche Siginifikanzlevel angezeigt wie bei color und cut.
 
-Mehrfaktorielle ANOVA
-Man könnte nun jeden einzelnen Faktor noch mit jedem anderen vergleichen. Um das ganze etwas einfacher zu machen, kann man aber auch eine mehrfaktorielle ANOVA berechnen.
-
-```{r}
-summary(aov(price~color*cut*clarity,data=diamonds))
-```
-Haupteffekte (siehe auch oben), sowie Interaktionen sind alle signifikant. 
-
 Lineare Regression (price~table)
+-> table ist intervallskaliert, d.h. lm ist wieder möglich!
 
 ```{r}
 ggplot(diamonds,aes(x=price,y=table)) +  geom_point() + geom_smooth(method="lm")
@@ -124,16 +140,85 @@ summary(diamonds.lm3)
 ```
 Die Breite des Diamanten an seiner Oberseite (table) kann nur 1,6% der Varianz des Preises erklären. Die Gerade ist nahezu waagrecht. D.h. der Mittelwert der Breite der Diamanten ist für jede Preisstufe in etwa gleich und steigt nicht mit dem Preis an, wie man meinen Könnte.
 
-
-Der Preis eines Diamanten hängt demnach hauptsächlich von der Karatzahl ab. Color, Cut, Clarity und table scheinen eine weniger große Rolle zu spielen.Die Residuals sind bei d Dennoch waren auch für sie die Ergebnisse signifikant.
-
-Man könnte nun noch testen, wie Color, Cut, Clarity und Table mit Carat zusammenhängen.
-
-Mehrfaktorielle ANOVA (carat~color,cut,clarity,table)
+ANOVA (price~table)
 
 ```{r}
-summary(aov(carat~color*cut*clarity*table,data=diamonds))
+summary(aov(price~table, data=diamonds))
 ```
+Gleiche Signifikanz wie bei anderen Faktoren!?
+
+Lineare Regression (price~x)
+
+```{r}
+ggplot(diamonds,aes(x=price,y=x)) +  geom_point() + geom_smooth(method="lm")
+diamonds.lm4 <- lm(price ~ x, data=diamonds)
+summary(diamonds.lm4)
+```
+Verteilung sah im Jitter eher esponentiell verteilt aus. Die Gerade beschreibt die Punkte nicht so gut. Aber 78% der Varianz werden laut dieser Berechnung durch x erklärt.
+
+Logarithmische Transformation
+
+```{r}
+y <- diamonds$price
+log.price <- log(y)
+log.x <- log(x)
+
+diamonds.lm5 <- lm(log.price~log.x,data=diamonds)
+summary(diamonds.lm5)
+```
+R sagt Fehler: Variablenlängen sind unterschiedlich (gefunden für `log.x`). Ich weiß leider nicht woran das liegt, oder wie ich es ändern könnnte.
+
+ANOVA (price~x)
+
+```{r}
+summary(aov(price~x, data=diamonds))
+```
+
+Lineare Regression (price~y)
+
+```{r}
+ggplot(diamonds,aes(x=price,y=y)) +  geom_point() + geom_smooth(method="lm")
+diamonds.lm6 <- lm(price ~ y, data=diamonds)
+summary(diamonds.lm6)
+```
+Laut dieser Berechnung erklärt y, 74% der Varianz beim Preis. Hier ist vielleicht ein Vergleich nötig, inwiefern y und carat zusammenhängen.
+
+```{r}
+ggplot(diamonds,aes(x=carat,y=y)) +  geom_point() + geom_smooth(method="lm")
+diamonds.lm7 <- lm(carat ~ y, data=diamonds)
+summary(diamonds.lm7)
+```
+--> y erklärt 90% der Varianz bei Karat, das heißt es macht Sinn, dass beide einen hohen Wert für den Preis aufweisen.
+
+Lineare Regression (price~z)
+
+```{r}
+ggplot(diamonds,aes(x=price,y=z)) +  geom_point() + geom_smooth(method="lm")
+diamonds.lm8 <- lm(price ~ z, data=diamonds)
+summary(diamonds.lm8)
+```
+Erklärt in etwa so viel wie y. Auch hier ein Vergleich mit Carat.
+
+```{r}
+ggplot(diamonds,aes(x=carat,y=z)) +  geom_point() + geom_smooth(method="lm")
+diamonds.lm4 <- lm(carat ~ z, data=diamonds)
+summary(diamonds.lm4)
+```
+Auch hier 90%.
+
+
+Mehrfaktorielle ANOVA
+Da die Faktoren carat, y und z am meisten Varianz zu erklären zu scheinen, bietet sich hier noch eine mehrfaktorielle ANOVA an.
+
+```{r}
+summary(aov(price~carat*x*y*z,data=diamonds))
+```
+Haupteffekte sind alle singifikant. Interaktionen sind alle signifikant, außer carat:y und Carat:z (innerhalb Varianz größer als zwischen Varianz). Wird bestätigt durch vorgenommene lineare Rgression (y und z können jeweils 90% der Varianz in Carat erklären.)
+
+
+Der Preis eines Diamanten hängt demnach hauptsächlich von der Karatzahl ab. Die Karatzahl wiederum lässt sich wohl hauptsächlich durch Weite und Tiefe erklären., weshalb diese auch einen großen Einfluss auf den Preis haben. Color, Cut, Clarity und table scheinen eine weniger große Rolle zu spielen. Depth habe ich nicht überprüft, da ich nicht verstanden habe, was genau damit gemeint ist.
+Außerdem kommt mir komisch vor, dass in den ANOVA die signifikanten Werte meistens 2e-16 sind (oder ist das einfach nur ein "Synonym" für "hochsignifikant"?)
+
 
 Hier ein paar Grafiken (auch im Buch zu finden):
 ```{r}
@@ -146,4 +231,4 @@ ggplot(diamonds,aes(x=carat,y=price,color=color)) + geom_point() + facet_wrap(~c
 Haben Sie dabei explorativ oder konfirmativ gearbeitet? Was hat das für eine Auswirkung auf die Interpretation der Ergebnisse?
 
 # Lizenz
-Dieses Werk ist lizenziert unter einer CC-BY-NC-SA Lizenz.
+Diese Datei soll nur Prüfungszwecken dienen.
