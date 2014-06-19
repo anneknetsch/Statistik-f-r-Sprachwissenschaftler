@@ -130,7 +130,8 @@ cor(pyreg$x1, pyreg$x2, method="pearson")
 # Wenn Sie nicht miteinander signifikant korreliert sind, sollten Sie auch die
 # Regression y ~ x1 + x2 berechnen:
 
-# Wert der Korrelation nah an 0 (-0,154), also keine signifikante Korrelation.
+# Wert des Korrelationskoeffizienten nah an 0 (-0,154), also keine signifikante 
+# Korrelation.
 
 pyreg.lm4 <- lm(y ~ x1+x2, data=pyreg)
 summary(pyreg.lm4)
@@ -140,7 +141,11 @@ summary(pyreg.lm4)
 # dass y im linearen Verhältnis zu x1 und x2 steht? Machen Sie eine Grafik wie
 # oben für y ~ x1 + x2, **nachdem Sie sich eine Antwort überlegt haben**.
 
+
 ggplot(pyreg,aes(x=x1,y=x2)) + geom_point(aes(size=y))
+
+# Lineares Modell passt nicht sehr gut, da die Punkte sozusagen "kreuz und quer"
+# verteilt sind.
 
 # Glauben Sie jetzt, dass y im linearen Verhältnis zu x1 und x2 steht? Warum (nicht)?
 
@@ -162,7 +167,15 @@ print(cor2.spearman)
 # Korreliert y mit x1? y mit x2? x1 mit x2? Welche Schlussfolgerung über solche
 # Dreiecke von Variablen und ihren Korrelationen können Sie daraus ziehen?
 
+# y mit x1: keine Korrelation
+# y mit x2: Korrelation
+# x1 mit x2 keine Korrelation
+
 # Welche Methode macht hier am meisten Sinn? Korrelationen oder Regression?
+
+# Korrelation macht mehr Sinn, da man mit der Regression y ~ x1 + x2, das Ergebnis
+# bekommt, dass x1 und x2 96% der Varianz in y erklären. Da es aber keinen 
+# linearen Zusammenhang gibt, macht das keinen Sinn.
 
 # Die Daten sind übrigens *nicht* linear. x1 besteht aus 10 zufälligen Zahlen
 # zwischen [1,10] und x2 besteht aus 10 zufälligen Zahlen zwischen [1,20]. 
