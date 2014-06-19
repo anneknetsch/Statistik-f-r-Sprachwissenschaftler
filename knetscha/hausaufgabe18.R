@@ -1,7 +1,7 @@
 # Hausaufgabe 18
-# Phillip Alday <phillip.alday@staff.uni-marburg.de>
-# 2014-06-17
-# Dieses Werk ist lizenziert unter einer CC-BY-NC-SA Lizenz.
+# Anne Kathrin Knetsch <knetscha@students.uni-marburg.de>
+# 2014-06-19
+# Diese Datei darf nur Prüfungszwecken dienen.
 
 
 # Die nächsten Punkte sollten ziemlich automatisch sein...
