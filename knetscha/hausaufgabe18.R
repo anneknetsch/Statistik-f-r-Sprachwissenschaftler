@@ -45,17 +45,19 @@ y = x1 + x2
 linreg <- data.frame(x1,x2,y)
 
 # Wir können y ~ x1 und y ~ x2 einzel plotten:
-# ggplot(linreg,aes(x=x1,y=y)) + geom_point() + geom_smooth(method="lm")
-# ggplot(linreg,aes(x=x2,y=y)) + geom_point() + geom_smooth(method="lm")
+ggplot(linreg,aes(x=x1,y=y)) + geom_point() + geom_smooth(method="lm")
+ggplot(linreg,aes(x=x2,y=y)) + geom_point() + geom_smooth(method="lm")
 
 # Die Linie passt sehr gut zu den Punkten, was wir hätten erwarten sollen, denn
 # wir haben y aus einfachen Summen von x1 und x2 berechnet. Wir berechnen
 # zunächst die lineare Regression für die einzelnen unabhängige Variablen.
 
-# CODE_HIER (x1)
+linreg.lm1 <- lm(y ~ x1, data=linreg)
+summary(linreg.lm1)
 
+linreg.lm2 <- lm(y ~ x2, data=linreg)
+summary(linreg.lm2)
 
-# CODE_HIER (x2)
 
 # Was haben Sie für Koeffizeinten bekommen? Wenn wir daran denken, dass x2 = 2*x1 ist, wissen wir, dass 
 # y = x1 + x2
