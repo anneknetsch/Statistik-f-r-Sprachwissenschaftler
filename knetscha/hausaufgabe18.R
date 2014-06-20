@@ -175,7 +175,7 @@ print(cor2.spearman)
 
 # Korrelation macht mehr Sinn, da man mit der Regression y ~ x1 + x2, das Ergebnis
 # bekommt, dass x1 und x2 96% der Varianz in y erklären. Da es aber keinen 
-# linearen Zusammenhang gibt, macht das keinen Sinn.
+# linearen Zusammenhang gibt, macht das eigentlich keinen Sinn.
 
 # Die Daten sind übrigens *nicht* linear. x1 besteht aus 10 zufälligen Zahlen
 # zwischen [1,10] und x2 besteht aus 10 zufälligen Zahlen zwischen [1,20]. 
