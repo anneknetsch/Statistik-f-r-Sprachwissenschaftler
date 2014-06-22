@@ -124,7 +124,7 @@ summary(pyreg.lm2)
 pyreg.lm3 <- lm(x1 ~ x2, data=pyreg)
 summary(pyreg.lm3)
 
-cor(pyreg$x1, pyreg$x2, method="pearson")
+cor.test(pyreg$x1, pyreg$x2, method="pearson")
 
 
 # Wenn Sie nicht miteinander signifikant korreliert sind, sollten Sie auch die
@@ -152,14 +152,14 @@ ggplot(pyreg,aes(x=x1,y=x2)) + geom_point(aes(size=y))
 # Wie sieht mit Korrelationen aus? Berechnen Sie die Korrelation (sowohl Pearson
 # als auch Spearman) zwischen (y und x1) sowie auch zwischen (y und x2). 
 
-cor1.pearson <- cor(pyreg$y, pyreg$x1, method="pearson")
+cor1.pearson <- cor.test(pyreg$y, pyreg$x1, method="pearson")
 print(cor1.pearson)
-cor1.spearman <- cor(pyreg$y, pyreg$x1, method="spearman")
+cor1.spearman <- cor.test(pyreg$y, pyreg$x1, method="spearman")
 print(cor1.spearman)
 
-cor2.pearson <- cor(pyreg$y, pyreg$x2, method="pearson")
+cor2.pearson <- cor.test(pyreg$y, pyreg$x2, method="pearson")
 print(cor2.pearson)
-cor2.spearman <- cor(pyreg$y, pyreg$x2, method="spearman")
+cor2.spearman <- cor.test(pyreg$y, pyreg$x2, method="spearman")
 print(cor2.spearman)
 
 # Welche Art von Korrelation macht am meisten Sinn bei diesen Daten?
